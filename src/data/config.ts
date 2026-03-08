@@ -1,45 +1,38 @@
 const config = {
-  title: "Naresh Khatri | Full-Stack Developer",
+  title: "Clarence Jay M. Fetalino | Data Scientist & Software Engineer",
   description: {
-    long: "Explore the portfolio of Naresh, a full-stack developer and creative technologist specializing in interactive web experiences, 3D animations, and innovative projects. Discover my latest work, including Coding Ducks, The Booking Desk, Ghostchat, and more. Let's build something amazing together!",
+    long: "Explore the portfolio of Clarence Jay M. Fetalino, a Data Scientist, AI/ML Specialist, and Software Engineer with over 3 years of experience in data analytics, AI solutions, and full-stack development. Discover my projects and expertise in Python, React, and more.",
     short:
-      "Discover the portfolio of Naresh, a full-stack developer creating interactive web experiences and innovative projects.",
+      "Portfolio of Clarence Jay M. Fetalino, a Data Scientist and Software Engineer specializing in AI/ML and interactive web experiences.",
   },
   keywords: [
-    "Naresh",
+    "Clarence Jay M. Fetalino",
     "portfolio",
-    "full-stack developer",
-    "creative technologist",
+    "Data Scientist",
+    "Software Engineer",
+    "AI/ML Specialist",
     "web development",
-    "3D animations",
-    "interactive websites",
-    "Coding Ducks",
-    "The Booking Desk",
-    "Ghostchat",
-    "web design",
-    "GSAP",
+    "Python",
     "React",
-    "Next.js",
-    "Spline",
-    "Framer Motion",
+    "Data Analytics",
   ],
-  author: "Naresh Khatri",
-  email: "naresh.khatri2345@gmail.com",
-  site: "https://nareshkhatri.site",
+  author: "Clarence Jay M. Fetalino",
+  email: "cjmfetalino18@gmail.com",
+  site: "https://clarence-ai-canvas.lovable.app",
 
   // for github stars button
-  githubUsername: "naresh-khatri",
-  githubRepo: "3d-portfolio",
+  githubUsername: "ahley18",
+  githubRepo: "cjfetalino-dev-portfolio",
 
   get ogImg() {
     return this.site + "/assets/seo/og-image.png";
   },
   social: {
-    twitter: "https://x.com/nothotchaddi",
-    linkedin: "https://www.linkedin.com/in/naresh-khatri/",
-    instagram: "https://www.instagram.com/hotchaddi",
-    facebook: "https://www.facebook.com/HotChaddi/",
-    github: "https://github.com/Naresh-Khatri",
+    twitter: "https://x.com/ahley18",
+    linkedin: "https://www.linkedin.com/in/clarencefetalino/",
+    instagram: "https://www.instagram.com/ahley18",
+    facebook: "https://www.facebook.com/clarencefetalino",
+    github: "https://github.com/ahley18",
   },
 };
 export { config };

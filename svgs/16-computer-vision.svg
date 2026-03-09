@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 24 24"
+   fill="none"
+   version="1.1"
+   id="svg2"
+   sodipodi:docname="16-computer-vision.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="namedview2"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.585466"
+     inkscape:cx="-61.81148"
+     inkscape:cy="167.45865"
+     inkscape:window-width="1920"
+     inkscape:window-height="1057"
+     inkscape:window-x="892"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <path
+     d="m 105.74851,53 c 0,0 22.22222,-44.4444444 61.11111,-44.4444444 C 205.74851,8.5555556 227.97073,53 227.97073,53 c 0,0 -22.22222,44.444444 -61.11111,44.444444 C 127.97073,97.444444 105.74851,53 105.74851,53 Z"
+     stroke="#34d399"
+     stroke-width="11.1111"
+     id="path1"
+     inkscape:export-filename="16-computer-vision.png"
+     inkscape:export-xdpi="96"
+     inkscape:export-ydpi="96" />
+  <circle
+     cx="166.85962"
+     cy="53"
+     r="16.666666"
+     stroke="#6ee7b7"
+     stroke-width="11.1111"
+     id="circle1" />
+  <circle
+     cx="166.85962"
+     cy="53"
+     r="5.5555553"
+     fill="#34d399"
+     id="circle2"
+     style="stroke-width:5.55556" />
+</svg>

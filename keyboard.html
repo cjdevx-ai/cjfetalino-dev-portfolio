@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Clarence's Tech Stack Keyboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: #05080f;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    padding: 40px 20px;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content:'';
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(99,179,237,0.07), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(167,139,250,0.06), transparent);
+    pointer-events:none;
+  }
+
+  h1 {
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 800;
+    color: #e8f0fe;
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #4a6380;
+    margin-bottom: 48px;
+    text-align: center;
+    letter-spacing: 0.12em;
+  }
+
+  /* KEYBOARD BOARD */
+  .keyboard {
+    background: linear-gradient(160deg, #1a2233 0%, #0f1620 60%, #0a1018 100%);
+    border-radius: 20px;
+    padding: 28px 32px 36px;
+    box-shadow:
+      0 40px 80px rgba(0,0,0,0.7),
+      0 0 0 1px rgba(255,255,255,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+    position: relative;
+  }
+
+  .keyboard::before {
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius:20px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 50%);
+    pointer-events:none;
+  }
+
+  .row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    justify-content: center;
+  }
+
+  /* KEYCAP */
+  .key {
+    width: 68px;
+    height: 68px;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.1s, filter 0.2s;
+    flex-shrink: 0;
+  }
+
+  .key:hover { filter: brightness(1.15); }
+  .key:active { transform: translateY(3px) scale(0.96); }
+
+  /* 3D keycap face */
+  .key-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 9px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 6px 4px 8px;
+    border-top: 1px solid rgba(255,255,255,0.25);
+    border-left: 1px solid rgba(255,255,255,0.15);
+    transition: transform 0.1s;
+  }
+
+  .key:hover .key-face { transform: translateY(-1px); }
+
+  .key-face img,
+  .key-face svg {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+  }
+
+  .key-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+    text-align: center;
+    line-height: 1.2;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    letter-spacing: 0.02em;
+  }
+
+  /* STATUS dot */
+  .key::after {
+    content: attr(data-status);
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    z-index: 10;
+  }
+
+  .key[data-status="have"]::after    { background: #00f5c4; box-shadow: 0 0 5px #00f5c4; }
+  .key[data-status="add"]::after     { background: #ff6b35; box-shadow: 0 0 5px #ff6b35; }
+  .key[data-status="upgrade"]::after { background: #a78bfa; box-shadow: 0 0 5px #a78bfa; }
+
+  /* TOOLTIP */
+  .key .tooltip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0f1a26;
+    border: 1px solid #1e2d3d;
+    border-radius: 8px;
+    padding: 8px 12px;
+    width: 160px;
+    z-index: 100;
+    pointer-events: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  }
+
+  .key:hover .tooltip { display: block; }
+
+  .tooltip-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #e8f0fe;
+    margin-bottom: 3px;
+  }
+
+  .tooltip-desc {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #5a7a94;
+    line-height: 1.4;
+  }
+
+  .tooltip-badge {
+    margin-top: 5px;
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .badge-have    { background: rgba(0,245,196,0.12); color: #00f5c4; }
+  .badge-add     { background: rgba(255,107,53,0.12); color: #ff6b35; }
+  .badge-upgrade { background: rgba(167,139,250,0.12); color: #a78bfa; }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    gap: 24px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #4a6380;
+  }
+
+  .ldot { width:8px; height:8px; border-radius:50%; }
+  .ldot.have    { background:#00f5c4; box-shadow:0 0 5px #00f5c4; }
+  .ldot.add     { background:#ff6b35; box-shadow:0 0 5px #ff6b35; }
+  .ldot.upgrade { background:#a78bfa; box-shadow:0 0 5px #a78bfa; }
+
+  .rank-badge {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<h1>Clarence's Tech Stack</h1>
+<p class="subtitle">// ai swe · top 20 · hover any key</p>
+
+<div class="keyboard">
+
+  <!-- ROW 1: keys 1–5 -->
+  <div class="row">
+
+    <!-- 1. Python -->
+    <div class="key" data-status="have" style="background:linear-gradient(145deg,#2e6da4,#1a4f7a); box-shadow:0 6px 0 #0d2e4a,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path d="M63.39 3.56c-28.75 0-26.96 12.47-26.96 12.47l.03 12.91h27.44v3.88H25.28S7.2 30.42 7.2 59.47c0 29.04 16.07 28.02 16.07 28.02h9.59v-13.48s-.52-16.07 15.81-16.07h27.22s15.3.25 15.3-14.78V18.35S93.5 3.56 63.39 3.56z" fill="#356d9b"/><path d="M63.86 9.8c-4.81 0-8.71 3.9-8.71 8.71s3.9 8.71 8.71 8.71 8.71-3.9 8.71-8.71-3.9-8.71-8.71-8.71z" fill="#ffd43b"/><path d="M64.61 124.44c28.75 0 26.96-12.47 26.96-12.47l-.03-12.91H64.1v-3.88h38.62s18.08 1.4 18.08-27.65c0-29.04-16.07-28.02-16.07-28.02h-9.59v13.48s.52 16.07-15.81 16.07H52.11s-15.3-.25-15.3 14.78v23.83s-2.31 14.77 27.8 14.77z" fill="#ffd43b"/><path d="M64.14 118.2c4.81 0 8.71-3.9 8.71-8.71s-3.9-8.71-8.71-8.71-8.71 3.9-8.71 8.71 3.9 8.71 8.71 8.71z" fill="#356d9b"/></svg>
+        <span class="key-label">Python</span>
+      </div>
+      <span class="rank-badge">#1</span>
+      <div class="tooltip"><div class="tooltip-name">Python</div><div class="tooltip-desc">Core language for all AI/ML work</div><span class="tooltip-badge badge-have">✓ Have</span></div>
+    </div>
+
+    <!-- 2. FastAPI -->
+    <div class="key" data-status="have" style="background:linear-gradient(145deg,#059669,#035c47); box-shadow:0 6px 0 #023830,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path d="M64 0C28.7 0 0 28.7 0 64s28.7 64 64 64 64-28.7 64-64S99.3 0 64 0z" fill="#059669"/><path d="M71.6 32L40 68h24l-7.6 28L88 60H64z" fill="white"/></svg>
+        <span class="key-label">FastAPI</span>
+      </div>
+      <span class="rank-badge">#2</span>
+      <div class="tooltip"><div class="tooltip-name">FastAPI</div><div class="tooltip-desc">Production-grade AI backend</div><span class="tooltip-badge badge-have">✓ Have</span></div>
+    </div>
+
+    <!-- 3. React + TS -->
+    <div class="key" data-status="upgrade" style="background:linear-gradient(145deg,#1a6b8a,#0f4a63); box-shadow:0 6px 0 #09303f,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><g fill="#61dafb"><circle cx="64" cy="64" r="11.4"/><ellipse cx="64" cy="64" rx="51" ry="19.5" fill="none" stroke="#61dafb" stroke-width="5.5"/><ellipse cx="64" cy="64" rx="51" ry="19.5" fill="none" stroke="#61dafb" stroke-width="5.5" transform="rotate(60 64 64)"/><ellipse cx="64" cy="64" rx="51" ry="19.5" fill="none" stroke="#61dafb" stroke-width="5.5" transform="rotate(120 64 64)"/></g></svg>
+        <span class="key-label">React/TS</span>
+      </div>
+      <span class="rank-badge">#3</span>
+      <div class="tooltip"><div class="tooltip-name">React + TypeScript</div><div class="tooltip-desc">Build real AI-powered UIs</div><span class="tooltip-badge badge-upgrade">↑ Level Up</span></div>
+    </div>
+
+    <!-- 4. RAG -->
+    <div class="key" data-status="add" style="background:linear-gradient(145deg,#7c3aed,#4c1d95); box-shadow:0 6px 0 #2e1065,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="7" height="7" rx="1" fill="#a78bfa"/>
+          <rect x="14" y="3" width="7" height="7" rx="1" fill="#c4b5fd"/>
+          <rect x="3" y="14" width="7" height="7" rx="1" fill="#c4b5fd"/>
+          <rect x="14" y="14" width="7" height="7" rx="1" fill="#a78bfa"/>
+          <line x1="10" y1="6.5" x2="14" y2="6.5" stroke="white" stroke-width="1.5"/>
+          <line x1="10" y1="17.5" x2="14" y2="17.5" stroke="white" stroke-width="1.5"/>
+          <line x1="6.5" y1="10" x2="6.5" y2="14" stroke="white" stroke-width="1.5"/>
+          <line x1="17.5" y1="10" x2="17.5" y2="14" stroke="white" stroke-width="1.5"/>
+        </svg>
+        <span class="key-label">RAG</span>
+      </div>
+      <span class="rank-badge">#4</span>
+      <div class="tooltip"><div class="tooltip-name">RAG Pipelines</div><div class="tooltip-desc">#1 AI SWE interview topic</div><span class="tooltip-badge badge-add">+ Add</span></div>
+    </div>
+
+    <!-- 5. PyTorch -->
+    <div class="key" data-status="have" style="background:linear-gradient(145deg,#b83232,#7a1f1f); box-shadow:0 6px 0 #4a1010,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path d="M64.032 19.22L32.44 50.813a44.45 44.45 0 000 62.879 44.45 44.45 0 0062.879 0 44.45 44.45 0 000-62.879l-8.702 8.702c11.84 11.84 11.84 31.223 0 43.062-11.84 11.84-31.222 11.84-43.062 0-11.84-11.84-11.84-31.222 0-43.062L64.032 19.22z" fill="#ee4c2c"/><circle cx="80.628" cy="33.156" r="6.518" fill="#ee4c2c"/></svg>
+        <span class="key-label">PyTorch</span>
+      </div>
+      <span class="rank-badge">#5</span>
+      <div class="tooltip"><div class="tooltip-name">PyTorch</div><div class="tooltip-desc">Deep learning foundation</div><span class="tooltip-badge badge-have">✓ Have</span></div>
+    </div>
+
+  </div>
+
+  <!-- ROW 2: keys 6–10 -->
+  <div class="row">
+
+    <!-- 6. LangChain/Graph -->
+    <div class="key" data-status="upgrade" style="background:linear-gradient(145deg,#1c3a1c,#112211); box-shadow:0 6px 0 #0a140a,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="16" fill="#1c3a1c"/>
+          <path d="M32 64 L52 44 L72 64 L52 84 Z" fill="#4ade80" opacity="0.9"/>
+          <path d="M56 64 L76 44 L96 64 L76 84 Z" fill="#86efac" opacity="0.7"/>
+          <line x1="52" y1="84" x2="76" y2="84" stroke="#4ade80" stroke-width="3"/>
+        </svg>
+        <span class="key-label">LangGraph</span>
+      </div>
+      <span class="rank-badge">#6</span>
+      <div class="tooltip"><div class="tooltip-name">LangChain / LangGraph</div><div class="tooltip-desc">Agents + multi-step orchestration</div><span class="tooltip-badge badge-upgrade">↑ Level Up</span></div>
+    </div>
+
+    <!-- 7. Next.js -->
+    <div class="key" data-status="add" style="background:linear-gradient(145deg,#2a2a2a,#151515); box-shadow:0 6px 0 #080808,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path d="M64 0C28.7 0 0 28.7 0 64s28.7 64 64 64c11.2 0 21.7-2.9 30.8-7.9L48.4 55.3v36.6H35.4V36.4h6.8l59.7 84.2C90.3 127 77.5 128 64 128 28.7 128 0 99.3 0 64S28.7 0 64 0z" fill="white"/><path d="M107.7 113.9L67.7 58.4V98H80v15.9c4.8-2.9 9.2-6.5 13.1-10.6l14.6 10.6z" fill="white"/></svg>
+        <span class="key-label">Next.js</span>
+      </div>
+      <span class="rank-badge">#7</span>
+      <div class="tooltip"><div class="tooltip-name">Next.js</div><div class="tooltip-desc">Full-stack JS for AI web apps</div><span class="tooltip-badge badge-add">+ Add</span></div>
+    </div>
+
+    <!-- 8. OpenAI -->
+    <div class="key" data-status="have" style="background:linear-gradient(145deg,#1a1a1a,#0d0d0d); box-shadow:0 6px 0 #050505,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path d="M116.5 52.3a29.9 29.9 0 00-2.6-24.5 30.2 30.2 0 00-32.4-14.5A29.9 29.9 0 0059 6.1a30.2 30.2 0 00-28.8 20.9 29.9 29.9 0 00-20 14.5 30.2 30.2 0 003.7 35.4 29.9 29.9 0 002.6 24.5 30.2 30.2 0 0032.4 14.5A29.9 29.9 0 0069 122.1a30.2 30.2 0 0028.9-20.9 29.9 29.9 0 0020-14.5 30.2 30.2 0 00-3.7-35.4h.3zM69.1 114a22.4 22.4 0 01-14.3-5.2l.7-.4 23.7-13.7a3.9 3.9 0 002-3.4V56.7l10 5.8a.4.4 0 01.2.3v27.7A22.5 22.5 0 0169.1 114zm-48.3-20.6a22.4 22.4 0 01-2.7-15.1l.7.4 23.7 13.7a3.9 3.9 0 003.9 0L73 78.8v11.6a.4.4 0 01-.1.3L49 104.3a22.5 22.5 0 01-28.2-10.9zM13.8 42a22.4 22.4 0 0111.7-9.9v28.2a3.9 3.9 0 001.9 3.4l26.6 15.4-10 5.8a.4.4 0 01-.3 0L19.9 70.3A22.5 22.5 0 0113.8 42zm82.4 19.3L69.6 45.9l10-5.8a.4.4 0 01.3 0l23.8 13.7a22.5 22.5 0 01-3.5 40.6V65.8a3.9 3.9 0 00-2-3.5h.1zm10-15.1l-.7-.4-23.7-13.7a3.9 3.9 0 00-3.9 0L51.3 47.4V35.8a.4.4 0 01.2-.3L75.3 21.9a22.5 22.5 0 0130.9 29.3zM45.3 67.6l-10-5.8a.4.4 0 01-.2-.3V33.9A22.5 22.5 0 0172 21.2l-.7.4-23.7 13.7a3.9 3.9 0 00-2 3.4v.1l-.3 28.8zm5.4-11.8l11.8-6.8 11.8 6.8v13.6L62.5 76 50.7 69.4V55.8z" fill="white"/></svg>
+        <span class="key-label">OpenAI</span>
+      </div>
+      <span class="rank-badge">#8</span>
+      <div class="tooltip"><div class="tooltip-name">OpenAI API</div><div class="tooltip-desc">GPT-4o, embeddings, assistants</div><span class="tooltip-badge badge-have">✓ Have</span></div>
+    </div>
+
+    <!-- 9. HuggingFace -->
+    <div class="key" data-status="have" style="background:linear-gradient(145deg,#8a6a1a,#5c4510); box-shadow:0 6px 0 #3a2b08,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <text y="72" x="50%" text-anchor="middle" font-size="72">🤗</text>
+        </svg>
+        <span class="key-label">HuggingFace</span>
+      </div>
+      <span class="rank-badge">#9</span>
+      <div class="tooltip"><div class="tooltip-name">HuggingFace</div><div class="tooltip-desc">Transformers, model hub, pipelines</div><span class="tooltip-badge badge-have">✓ Have</span></div>
+    </div>
+
+    <!-- 10. REST API -->
+    <div class="key" data-status="upgrade" style="background:linear-gradient(145deg,#1a3a5c,#0f2540); box-shadow:0 6px 0 #071828,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 6h16M4 12h10M4 18h13" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/>
+          <path d="M17 9l3 3-3 3" stroke="#93c5fd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="key-label">REST API</span>
+      </div>
+      <span class="rank-badge">#10</span>
+      <div class="tooltip"><div class="tooltip-name">REST API Design</div><div class="tooltip-desc">Clean contracts between AI backend and frontend</div><span class="tooltip-badge badge-upgrade">↑ Level Up</span></div>
+    </div>
+
+  </div>
+
+  <!-- ROW 3: keys 11–15 -->
+  <div class="row">
+
+    <!-- 11. Fine-tuning LoRA -->
+    <div class="key" data-status="upgrade" style="background:linear-gradient(145deg,#6b21a8,#3b0764); box-shadow:0 6px 0 #1e0338,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7l10 5 10-5-10-5z" fill="#d8b4fe"/>
+          <path d="M2 17l10 5 10-5" stroke="#c084fc" stroke-width="2" stroke-linecap="round"/>
+          <path d="M2 12l10 5 10-5" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span class="key-label">LoRA/PEFT</span>
+      </div>
+      <span class="rank-badge">#11</span>
+      <div class="tooltip"><div class="tooltip-name">Fine-tuning / LoRA</div><div class="tooltip-desc">Separates mid from senior AI engineers</div><span class="tooltip-badge badge-upgrade">↑ Level Up</span></div>
+    </div>
+
+    <!-- 12. LlamaIndex -->
+    <div class="key" data-status="add" style="background:linear-gradient(145deg,#7c2d12,#450a00); box-shadow:0 6px 0 #270500,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 3C9 3 7 5 7 8c0 2 1 3.5 2.5 4.5C8 14 7 16 7 18h10c0-2-1-4-2.5-5.5C16 11.5 17 10 17 8c0-3-2-5-5-5z" fill="#fb923c"/>
+          <ellipse cx="12" cy="18.5" rx="5" ry="1.5" fill="#fdba74"/>
+          <circle cx="10" cy="8" r="1" fill="white"/>
+          <circle cx="14" cy="8" r="1" fill="white"/>
+        </svg>
+        <span class="key-label">LlamaIndex</span>
+      </div>
+      <span class="rank-badge">#12</span>
+      <div class="tooltip"><div class="tooltip-name">LlamaIndex</div><div class="tooltip-desc">RAG framework — pairs with FastAPI</div><span class="tooltip-badge badge-add">+ Add</span></div>
+    </div>
+
+    <!-- 13. PostgreSQL + pgvector -->
+    <div class="key" data-status="add" style="background:linear-gradient(145deg,#1e3a5f,#0f2040); box-shadow:0 6px 0 #071428,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path d="M93.809 92.112c.785-6.533.55-7.492 5.416-6.433l1.235.108c3.742.17 8.637-.602 11.513-1.938 6.191-2.873 9.861-7.668 3.758-6.409-13.924 2.873-14.881-1.842-14.881-1.842 14.703-21.815 20.849-49.508 15.543-56.287-14.47-18.489-39.517-9.746-39.936-9.52l-.134.025c-2.751-.571-5.83-.912-9.289-.968-6.292-.104-11.066 1.652-14.702 4.402 0 0-44.67-18.408-42.589 23.149.443 8.861 12.702 67.029 27.317 49.47 5.337-6.437 10.487-11.875 10.487-11.875 2.559 1.699 5.622 2.567 8.833 2.255l.249-.212c-.078.796-.044 1.575.099 2.497-3.757 4.199-2.653 4.936-10.166 6.482-7.602 1.566-3.136 4.355-.22 5.084 3.534.884 11.712 2.136 17.238-5.598l-.22.882c1.474 1.18 2.508 7.672 2.334 13.556-.174 5.885-.29 9.926.871 13.082 1.162 3.156 2.323 10.254 12.224 8.132 8.26-1.786 14.107-6.713 14.762-43.756z" fill="#336791"/><path d="M66.448 96.424c-.574 20.898 .15 41.649 2.042 46.783 1.892 5.134 5.921 17.038 15.822 14.917 8.26-1.787 11.326-5.91 12.694-14.518 1.004-6.368 3.371-21.5 3.485-31.064" fill="#336791"/></svg>
+        <span class="key-label">pgvector</span>
+      </div>
+      <span class="rank-badge">#13</span>
+      <div class="tooltip"><div class="tooltip-name">PostgreSQL + pgvector</div><div class="tooltip-desc">Vector search in relational DB</div><span class="tooltip-badge badge-add">+ Add</span></div>
+    </div>
+
+    <!-- 14. WebSockets/Streaming -->
+    <div class="key" data-status="add" style="background:linear-gradient(145deg,#164e63,#0c2d3a); box-shadow:0 6px 0 #051820,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 12h4l3-8 4 16 3-8h4" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="key-label">Streaming</span>
+      </div>
+      <span class="rank-badge">#14</span>
+      <div class="tooltip"><div class="tooltip-name">WebSockets / Streaming</div><div class="tooltip-desc">Real-time LLM token streaming in UI</div><span class="tooltip-badge badge-add">+ Add</span></div>
+    </div>
+
+    <!-- 15. Docker -->
+    <div class="key" data-status="have" style="background:linear-gradient(145deg,#1565c0,#0d3d73); box-shadow:0 6px 0 #072548,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path d="M124.8 52.1c-4.3-2.5-10-2.8-14.8-1.4-.6-5.2-4-9.7-8-12.9l-1.6-1.3-1.4 1.6c-2.6 3-3.4 8.1-3.1 12-.2.1-1.4.5-1.6.6-1.3.4-2.6.5-3.9.5H2.4l-.3 1.6c-.9 5.5-.8 11.4 1.3 16.6 2.4 5.6 6.7 9.6 12.4 11.8 5.5 2 11.2 2.1 16.8 1 7-1.4 13.3-5.1 18.1-10.4 4.2-4.7 6.9-10.5 8.3-16.8.4 0 .9.1 1.3.1 4.3.1 8.5-1.3 11.6-4.1.7-.7 1.9-2.1 2.5-3.2l.5-1-.9-.6z" fill="#394d54"/><path d="M17.7 55.9h9.5v9.5h-9.5zm11 0h9.5v9.5H28.7zm11 0h9.5v9.5H39.7zm11 0h9.5v9.5H50.7zm-33 10h9.5v9.5H17.7zm11 0h9.5v9.5H28.7zm11 0h9.5v9.5H39.7zm11 0h9.5v9.5H50.7zm-22-20h9.5v9.5H28.7zm11 0h9.5v9.5H39.7zm11 0h9.5v9.5H50.7zm11 0h9.5v9.5H61.7z" fill="#00acd3"/></svg>
+        <span class="key-label">Docker</span>
+      </div>
+      <span class="rank-badge">#15</span>
+      <div class="tooltip"><div class="tooltip-name">Docker</div><div class="tooltip-desc">Containerization — table stakes</div><span class="tooltip-badge badge-have">✓ Have</span></div>
+    </div>
+
+  </div>
+
+  <!-- ROW 4: keys 16–20 -->
+  <div class="row">
+
+    <!-- 16. Computer Vision -->
+    <div class="key" data-status="have" style="background:linear-gradient(145deg,#065f46,#022c20); box-shadow:0 6px 0 #011a12,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="#34d399" stroke-width="2"/>
+          <circle cx="12" cy="12" r="3" stroke="#6ee7b7" stroke-width="2"/>
+          <circle cx="12" cy="12" r="1" fill="#34d399"/>
+        </svg>
+        <span class="key-label">Comp. Vision</span>
+      </div>
+      <span class="rank-badge">#16</span>
+      <div class="tooltip"><div class="tooltip-name">Computer Vision</div><div class="tooltip-desc">YOLO detection — your differentiator</div><span class="tooltip-badge badge-have">✓ Have</span></div>
+    </div>
+
+    <!-- 17. MLflow / W&B -->
+    <div class="key" data-status="add" style="background:linear-gradient(145deg,#1e1b4b,#12103a); box-shadow:0 6px 0 #0a0828,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="4" height="14" rx="1" fill="#f59e0b"/>
+          <rect x="10" y="7" width="4" height="10" rx="1" fill="#fbbf24"/>
+          <rect x="17" y="5" width="4" height="12" rx="1" fill="#fcd34d"/>
+          <path d="M3 20h18" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span class="key-label">MLflow/W&B</span>
+      </div>
+      <span class="rank-badge">#17</span>
+      <div class="tooltip"><div class="tooltip-name">MLflow / W&B</div><div class="tooltip-desc">Experiment tracking — looks production-grade</div><span class="tooltip-badge badge-add">+ Add</span></div>
+    </div>
+
+    <!-- 18. Pinecone -->
+    <div class="key" data-status="add" style="background:linear-gradient(145deg,#3b1f5e,#1e0f34); box-shadow:0 6px 0 #110820,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L8 8H4l4 4-2 6 6-3 6 3-2-6 4-4h-4z" fill="#818cf8" stroke="#6366f1" stroke-width="0.5"/>
+          <circle cx="12" cy="10" r="2" fill="#e0e7ff"/>
+        </svg>
+        <span class="key-label">Pinecone</span>
+      </div>
+      <span class="rank-badge">#18</span>
+      <div class="tooltip"><div class="tooltip-name">Pinecone / Weaviate</div><div class="tooltip-desc">Vector DB for LLM-powered apps</div><span class="tooltip-badge badge-add">+ Add</span></div>
+    </div>
+
+    <!-- 19. AWS/GCP -->
+    <div class="key" data-status="have" style="background:linear-gradient(145deg,#92400e,#5a2706); box-shadow:0 6px 0 #361603,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path d="M40.7 66.4l-9.8 3.6-1.1.4v10.3l10.9-3.9V66.4z" fill="#f90"/><path d="M40.7 55.9l-10.9 3.9v10.3l1.1-.4 9.8-3.6V55.9z" fill="#f90"/><path d="M51.7 62.2l-11 4V76.5l11-4V62.2z" fill="#f90"/><path d="M51.7 51.7l-11 4v10.3l11-4V51.7z" fill="#f90"/><path d="M29.8 69.9v10.2l-10.9-3.9V66l10.9 3.9z" fill="#f90"/><path d="M29.8 59.5v10.3L18.9 66V55.7l10.9 3.8z" fill="#f90"/><path d="M18.9 55.7v10.2l-5.5-2V45.4l28.3 10.3-10.9 4-11.9-4z" fill="#f90"/><path d="M62.8 45.4L34.4 55.7l-5.5-2V43.4l28.3-10.3 5.6 2v10.3z" fill="#f90"/><path d="M57.3 33.1L29 43.4l5.5 2 28.3-10.3-5.5-2z" fill="#f90"/></svg>
+        <span class="key-label">AWS/GCP</span>
+      </div>
+      <span class="rank-badge">#19</span>
+      <div class="tooltip"><div class="tooltip-name">AWS / GCP</div><div class="tooltip-desc">Cloud deployment — already in stack</div><span class="tooltip-badge badge-have">✓ Have</span></div>
+    </div>
+
+    <!-- 20. GitHub Actions -->
+    <div class="key" data-status="upgrade" style="background:linear-gradient(145deg,#1f2937,#111827); box-shadow:0 6px 0 #080d14,0 8px 12px rgba(0,0,0,0.5);">
+      <div class="key-face">
+        <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M64 5.103c-33.347 0-60.388 27.035-60.388 60.388 0 26.682 17.303 49.317 41.297 57.303 3.017.56 4.125-1.31 4.125-2.905 0-1.44-.056-6.197-.082-11.243-16.8 3.653-20.345-7.125-20.345-7.125-2.747-6.98-6.705-8.836-6.705-8.836-5.48-3.748.413-3.67.413-3.67 6.063.425 9.257 6.223 9.257 6.223 5.386 9.23 14.127 6.562 17.573 5.02.542-3.903 2.107-6.568 3.834-8.076-13.413-1.525-27.514-6.704-27.514-29.843 0-6.593 2.36-11.98 6.223-16.21-.628-1.52-2.695-7.662.584-15.98 0 0 5.07-1.623 16.61 6.19C53.7 35 58.867 34.327 64 34.304c5.13.023 10.3.694 15.127 2.033 11.526-7.813 16.59-6.19 16.59-6.19 3.287 8.317 1.22 14.46.593 15.98 3.872 4.23 6.215 9.617 6.215 16.21 0 23.194-14.127 28.3-27.574 29.796 2.167 1.874 4.097 5.55 4.097 11.183 0 8.08-.07 14.583-.07 16.572 0 1.607 1.088 3.49 4.148 2.897 23.98-7.994 41.263-30.622 41.263-57.294C124.388 32.14 97.35 5.104 64 5.104z" fill="white"/></svg>
+        <span class="key-label">GH Actions</span>
+      </div>
+      <span class="rank-badge">#20</span>
+      <div class="tooltip"><div class="tooltip-name">GitHub Actions CI/CD</div><div class="tooltip-desc">Automate deploy pipelines</div><span class="tooltip-badge badge-upgrade">↑ Level Up</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item"><div class="ldot have"></div> Already Have (9)</div>
+  <div class="legend-item"><div class="ldot add"></div> Must Add (7)</div>
+  <div class="legend-item"><div class="ldot upgrade"></div> Level Up (4)</div>
+</div>
+
+</body>
+</html>

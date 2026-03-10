@@ -1,20 +1,21 @@
 const config = {
-  title: "Clarence Jay M. Fetalino | Data Scientist & Software Engineer",
+  title: "Clarence Jay M. Fetalino | AI Software Engineer",
   description: {
-    long: "Explore the portfolio of Clarence Jay M. Fetalino, a Data Scientist, AI/ML Specialist, and Software Engineer with over 3 years of experience in data analytics, AI solutions, and full-stack development. Discover my projects and expertise in Python, React, and more.",
+    long: "Explore the portfolio of Clarence Jay M. Fetalino, an AI Software Engineer with over 3 years of experience in shipping next-gen AI products, autonomous AI agents, and multimodal systems. Discover my projects and expertise in Python, React, and LLMs.",
     short:
-      "Portfolio of Clarence Jay M. Fetalino, a Data Scientist and Software Engineer specializing in AI/ML and interactive web experiences.",
+      "Portfolio of Clarence Jay M. Fetalino, an AI Software Engineer specializing in Generative AI solutions and interactive web experiences.",
   },
   keywords: [
     "Clarence Jay M. Fetalino",
     "portfolio",
-    "Data Scientist",
+    "AI Software Engineer",
     "Software Engineer",
     "AI/ML Specialist",
     "web development",
     "Python",
     "React",
-    "Data Analytics",
+    "Generative AI",
+    "LLMs",
   ],
   author: "Clarence Jay M. Fetalino",
   email: "cjmfetalino18@gmail.com",

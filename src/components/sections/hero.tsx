@@ -76,7 +76,7 @@ const HeroSection = () => {
                       "cursor-default font-display sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
                     )}
                   >
-                    AI Software Engineer
+                    Data Scientist & Software Engineer
                   </p>
                 </BlurIn>
               </div>

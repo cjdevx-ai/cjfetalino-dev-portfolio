@@ -20,6 +20,17 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (message.length < 10) {
+      toast({
+        title: "Message too short",
+        description: "Please provide a bit more detail (at least 10 characters).",
+        variant: "default",
+        className: cn("top-0 mx-auto flex fixed md:top-4 md:right-4 bg-orange-500 text-white border-none"),
+      });
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await fetch("/api/send", {

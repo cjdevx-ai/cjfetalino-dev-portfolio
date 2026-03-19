@@ -11,6 +11,7 @@ import {
   SiDocker,
   SiExpress,
   SiFirebase,
+  SiGooglecloud,
   SiJavascript,
   SiMongodb,
   SiPostgresql,
@@ -24,9 +25,13 @@ import {
   SiTailwindcss,
   SiThreedotjs,
   SiTypescript,
+  SiVite,
   SiVuedotjs,
 } from "react-icons/si";
 import { TbBrandFramerMotion } from "react-icons/tb";
+import { GiSpaceSuit } from "react-icons/gi";
+import { HiLightningBolt } from "react-icons/hi";
+
 const BASE_PATH = "/assets/projects-screenshots";
 
 const ProjectsLinks = ({ live, repo }: { live: string; repo?: string }) => {
@@ -67,6 +72,48 @@ export type Skill = {
   icon: ReactNode;
 };
 const PROJECT_SKILLS = {
+  fastapi: {
+    title: "FastAPI",
+    bg: "black",
+    fg: "white",
+    icon: <SiPython />,
+  },
+  threejs: {
+    title: "Three.js",
+    bg: "black",
+    fg: "white",
+    icon: <SiThreedotjs />,
+  },
+  vite: {
+    title: "Vite",
+    bg: "black",
+    fg: "white",
+    icon: <SiVite />,
+  },
+  huggingface: {
+    title: "Hugging Face",
+    bg: "black",
+    fg: "white",
+    icon: <SiPython />,
+  },
+  googlecloud: {
+    title: "GCP",
+    bg: "black",
+    fg: "white",
+    icon: <SiGooglecloud />,
+  },
+  stabilityai: {
+    title: "Stability AI",
+    bg: "black",
+    fg: "white",
+    icon: <HiLightningBolt />,
+  },
+  pollinations: {
+    title: "Pollinations.ai",
+    bg: "black",
+    fg: "white",
+    icon: <GiSpaceSuit />,
+  },
   next: {
     title: "Next.js",
     bg: "black",
@@ -235,104 +282,81 @@ export type Project = {
 };
 const projects: Project[] = [
   {
-    id: "ppe-detection",
-    category: "AI / Computer Vision",
-    title: "PPE Detection and Monitoring System",
-    src: "/assets/nav-link-previews/projects.png",
-    screenshots: ["landing.png"],
+    id: "sentiment-ai",
+    category: "AI / NLP",
+    title: "Reddit Sentiment Analysis",
+    src: "/assets/projects-screenshots/sentiment_ai/1.png",
+    screenshots: [
+      "/assets/projects-screenshots/sentiment_ai/1.png",
+      "/assets/projects-screenshots/sentiment_ai/2.png",
+    ],
     skills: {
-      frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.tailwind],
-      backend: [PROJECT_SKILLS.python, PROJECT_SKILLS.node],
+      frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.vite, PROJECT_SKILLS.docker],
+      backend: [PROJECT_SKILLS.fastapi, PROJECT_SKILLS.python, PROJECT_SKILLS.huggingface],
     },
     live: "#",
-    github: "https://github.com/ahley18",
+    github: "https://github.com/cjdevx-ai/Reddit-Sentiment-Analysis",
     get content() {
       return (
-        <div>
-          <TypographyP className="font-mono text-2xl text-center">
-            AI-powered safety monitoring for workplaces.
-          </TypographyP>
-          <TypographyP className="font-mono ">
-            Developed a real-time dashboard that tracks worker entries, exits, and PPE compliance, enabling immediate visibility and improved safety oversight.
-          </TypographyP>
+        <div className="flex flex-col gap-6 mt-8">
+          <SlideShow images={this.screenshots} />
+          <div className="space-y-4 px-4">
+            <TypographyP className="italic text-zinc-400 text-lg leading-relaxed">
+              Have you ever wondered what the collective voice of a Reddit community truly feels? 
+              This project was born from the desire to peek behind the curtain of thousands of comments.
+            </TypographyP>
+            <TypographyP className="leading-relaxed">
+              I built a bridge between the chaotic energy of Reddit and the precision of machine learning. 
+              By simply feeding it a URL, the system dives deep into the thread using the <strong>DistilBERT</strong> model. 
+              It doesn't just read words; it deciphers intent, classifying emotions into a visual map of 
+              positivity, negativity, and neutrality—all delivered through a high-performance FastAPI backend.
+            </TypographyP>
+            <TypographyP className="leading-relaxed font-bold text-zinc-300">
+              It&apos;s not just data; it&apos;s the digital pulse of the internet, analyzed in real-time.
+            </TypographyP>
+          </div>
           <ProjectsLinks live={this.live} repo={this.github} />
         </div>
       );
     },
   },
   {
-    id: "meditimely",
-    category: "AI / Healthcare",
-    title: "MediTimely: AI Appointment Optimization",
-    src: "/assets/nav-link-previews/projects.png",
-    screenshots: ["landing.png"],
+    id: "shoe-ai",
+    category: "AI / Generative 3D",
+    title: "ShoeAI: Prompt to 3D",
+    src: "/assets/projects-screenshots/shoe_ai/1.png",
+    screenshots: [
+      "/assets/projects-screenshots/shoe_ai/1.png",
+      "/assets/projects-screenshots/shoe_ai/2.png",
+      "/assets/projects-screenshots/shoe_ai/3.png",
+      "/assets/projects-screenshots/shoe_ai/4.png",
+      "/assets/projects-screenshots/shoe_ai/5.png",
+    ],
     skills: {
-      frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.tailwind],
-      backend: [PROJECT_SKILLS.python, PROJECT_SKILLS.node],
+      frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.ts, PROJECT_SKILLS.threejs, PROJECT_SKILLS.vite],
+      backend: [PROJECT_SKILLS.fastapi, PROJECT_SKILLS.stabilityai, PROJECT_SKILLS.pollinations, PROJECT_SKILLS.googlecloud],
     },
     live: "#",
-    github: "https://github.com/ahley18",
+    github: "https://github.com/cjdevx-ai/Promt-to-3D-Shoe-AI",
     get content() {
       return (
-        <div>
-          <TypographyP className="font-mono text-2xl text-center">
-            Reducing hospital wait times with AI.
-          </TypographyP>
-          <TypographyP className="font-mono ">
-            Developed an AI model using hospital data across Metro Manila, and leveraged Logistic Regression for predictive forecasting—reducing the average 4 hour of patient wait times by 90% through optimized queue management.
-          </TypographyP>
-          <ProjectsLinks live={this.live} repo={this.github} />
-        </div>
-      );
-    },
-  },
-  {
-    id: "readear",
-    category: "AI / Accessibility",
-    title: "ReadEar: Text-to-Speech Camera Device",
-    src: "/assets/nav-link-previews/projects.png",
-    screenshots: ["landing.png"],
-    skills: {
-      frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.tailwind],
-      backend: [PROJECT_SKILLS.python, PROJECT_SKILLS.node],
-    },
-    live: "#",
-    github: "https://github.com/ahley18",
-    get content() {
-      return (
-        <div>
-          <TypographyP className="font-mono text-2xl text-center">
-            Empowering the blind and visually impaired.
-          </TypographyP>
-          <TypographyP className="font-mono ">
-            Developed a device with OCR functionality that converts text from images into audio. This innovation enhanced accessibility, resulting in a 30% improvement in reading comprehension scores among visually impaired students in Metro Manila.
-          </TypographyP>
-          <ProjectsLinks live={this.live} repo={this.github} />
-        </div>
-      );
-    },
-  },
-  {
-    id: "electrifai",
-    category: "AI / Energy",
-    title: "ELECTRIFAI: Energy Theft Detection",
-    src: "/assets/nav-link-previews/projects.png",
-    screenshots: ["landing.png"],
-    skills: {
-      frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.tailwind],
-      backend: [PROJECT_SKILLS.python, PROJECT_SKILLS.node],
-    },
-    live: "#",
-    github: "https://github.com/ahley18",
-    get content() {
-      return (
-        <div>
-          <TypographyP className="font-mono text-2xl text-center">
-            Detecting and preventing unauthorized power tapping.
-          </TypographyP>
-          <TypographyP className="font-mono ">
-            In partnership with Meralco, I developed and presented dashboards to monitor anomalies and losses in power consumption, achieving a 100% reduction in both power losses and house-to-house meter reading costs during trials.
-          </TypographyP>
+        <div className="flex flex-col gap-6 mt-8">
+          <SlideShow images={this.screenshots} />
+          <div className="space-y-4 px-4">
+            <TypographyP className="italic text-zinc-400 text-lg leading-relaxed">
+              Imagine describing your dream sneaker and seeing it materialize in 3D right before your eyes. 
+              That was the mission behind ShoeAI.
+            </TypographyP>
+            <TypographyP className="leading-relaxed">
+              I engineered a complex pipeline that merges <strong>Stability AI</strong> and <strong>Pollinations.ai</strong> 
+              to turn abstract text into high-fidelity .glb models. Within 60 seconds, the system handles everything from 
+              initial image generation to mesh creation and PBR texturing. 
+            </TypographyP>
+            <TypographyP className="leading-relaxed">
+              Wrapped in a sleek glassmorphic UI, it allows creators to rotate, zoom, and inspect their footwear concepts 
+              in a fully interactive environment. It&apos;s where professional design meets the speed of generative AI.
+            </TypographyP>
+          </div>
           <ProjectsLinks live={this.live} repo={this.github} />
         </div>
       );

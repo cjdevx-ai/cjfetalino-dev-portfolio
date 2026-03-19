@@ -23,7 +23,7 @@ export async function POST(req: Request) {
       return Response.json({ error: zodError?.message }, { status: 400 });
 
     const { data: resendData, error: resendError } = await resend.emails.send({
-      from: "Porfolio <onboarding@resend.dev>",
+      from: "onboarding@resend.dev",
       to: [config.email],
       subject: "Contact me from portfolio",
       react: EmailTemplate({
@@ -34,7 +34,8 @@ export async function POST(req: Request) {
     });
 
     if (resendError) {
-      return Response.json({ resendError }, { status: 500 });
+      console.error("Resend Error:", resendError);
+      return Response.json({ error: resendError.message || "Failed to send email" }, { status: 500 });
     }
 
     return Response.json(resendData);

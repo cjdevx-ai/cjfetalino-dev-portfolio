@@ -290,7 +290,7 @@ export const EXPERIENCE: Experience[] = [
   {
     id: 1,
     startDate: "Oct 2023",
-    endDate: "Present",
+    endDate: "Present (2 yrs 6 mos)",
     title: "Intelligent Software Lead Engineer",
     company: "GEARTech",
     description: [
@@ -303,7 +303,7 @@ export const EXPERIENCE: Experience[] = [
   {
     id: 2,
     startDate: "February 2025",
-    endDate: "Present",
+    endDate: "Present (1 yr 2 mos)",
     title: "Quality Analyst",
     company: "WSC Sports",
     description: [
@@ -316,7 +316,7 @@ export const EXPERIENCE: Experience[] = [
   {
     id: 3,
     startDate: "October 2024",
-    endDate: "February 2026",
+    endDate: "February 2026 (1 yr 5 mos)",
     title: "Network Technology Engineer",
     company: "ElectrifAI Solutions PH",
     description: [
@@ -329,7 +329,7 @@ export const EXPERIENCE: Experience[] = [
   {
     id: 4,
     startDate: "July 2025",
-    endDate: "August 2025",
+    endDate: "August 2025 (6 mos)",
     title: "AI Software Engineer Intern",
     company: "Simplevia Technologies Inc.",
     description: [
@@ -337,12 +337,24 @@ export const EXPERIENCE: Experience[] = [
       "Troubleshot and optimized legacy web systems to enhance performance and reliability.",
       "Shipped 6 projects within 2 months and was formally commended as a strong candidate for full-time absorption.",
     ],
-    skills: [SkillNames.REACT, SkillNames.NEXTJS],
+    skills: [SkillNames.REACT, SkillNames.NEXTJS, SkillNames.PYTHON],
   },
   {
     id: 5,
+    startDate: "Jan 2025",
+    endDate: "Jun 2025 (6 mos)",
+    title: "Junior AI Engineer",
+    company: "Omdena",
+    description: [
+      "Built and deployed a deepfake detection system using fine-tuned vision models and multimodal LLMs, enabling automated identification of synthetic media with explainable artifact-level reasoning.",
+      "Developed an AI-powered fake job posting detector combining a fine-tuned NLP classifier with an agentic pipeline that cross-references company legitimacy, salary benchmarks, and scam pattern signals to generate structured fraud reports.",
+    ],
+    skills: [SkillNames.PYTHON, SkillNames.COMPUTER_VISION, SkillNames.OPENAI, SkillNames.HUGGINGFACE],
+  },
+  {
+    id: 6,
     startDate: "Jul 2024",
-    endDate: "Sep 2024",
+    endDate: "Sep 2024 (3 months)",
     title: "Electronics Engineering Intern",
     company: "Packetworx Inc",
     description: [
@@ -351,6 +363,27 @@ export const EXPERIENCE: Experience[] = [
       "Successfully shipped and presented the completed dashboard directly to the CEO by end of internship.",
     ],
     skills: [SkillNames.REACT, SkillNames.NODEJS],
+  },
+];
+
+export const AFFILIATIONS = [
+  {
+    title: "Data Tech Specialist",
+    company: "AWS Cloud",
+    startDate: "Nov 2024",
+    endDate: "Aug 2025 (10 mos)",
+  },
+  {
+    title: "Senior Data and ML Associate",
+    company: "Google Developer Group",
+    startDate: "Nov 2024",
+    endDate: "Aug 2025 (10 mos)",
+  },
+  {
+    title: "Researcher",
+    company: "Hygears Inc",
+    startDate: "Oct 2024",
+    endDate: "Jul 2025 (10 months)",
   },
 ];
 

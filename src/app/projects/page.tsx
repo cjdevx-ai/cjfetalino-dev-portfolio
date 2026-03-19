@@ -11,53 +11,26 @@ import "@splidejs/react-splide/css";
 const PROJECTS = [
   {
     id: 1,
-    name: "Coding Ducks",
-    description: `Dive into CodingDucks, a fusion of CodePen's creative playground with LeetCode's problem-solving realm.
-Whether you're a newbie or a seasoned coder, join the community to paddle through coding adventures and let your
-creativity soar.`,
-    link: "https://www.codingducks.live",
+    name: "Reddit Sentiment Analysis",
+    description: `Deciphering the digital pulse of Reddit. By leveraging the DistilBERT model and a high-performance FastAPI backend, this system transforms thousands of comments into a visual map of collective emotion. It's not just data; it's a peek behind the curtain of online discourse.`,
+    link: "https://github.com/cjdevx-ai/Reddit-Sentiment-Analysis",
     images: [
-      "/assets/projects-screenshots/codingducks/1.png",
-      "/assets/projects-screenshots/codingducks/2.png",
-      "/assets/projects-screenshots/codingducks/3.png",
-      "/assets/projects-screenshots/codingducks/4.png",
-      "/assets/projects-screenshots/codingducks/5.png",
+      "/assets/projects-screenshots/sentiment_ai/1.png",
+      "/assets/projects-screenshots/sentiment_ai/2.png",
     ],
   },
   {
     id: 2,
-    name: "Ghost Chat",
-    description: `GhostChat is an anonymous messaging app that allows users to connect without revealing their identities. 
-Join the community for intriguing conversations and mysterious encounters.`,
-    link: "https://ghostchatt.vercel.app/",
+    name: "ShoeAI: Prompt to 3D",
+    description: `Where imagination meets materialization. ShoeAI merges Stability AI with specialized 3D generative pipelines to turn text prompts into high-fidelity footwear models in under 60 seconds. A professional design suite powered by the cutting edge of generative AI.`,
+    link: "https://github.com/cjdevx-ai/Promt-to-3D-Shoe-AI",
     images: [
-      "/assets/projects-screenshots/ghostchat/1.png",
-      "/assets/projects-screenshots/ghostchat/2.png",
-      "/assets/projects-screenshots/ghostchat/3.png",
-      "/assets/projects-screenshots/ghostchat/4.png",
+      "/assets/projects-screenshots/shoe_ai/1.png",
+      "/assets/projects-screenshots/shoe_ai/2.png",
+      "/assets/projects-screenshots/shoe_ai/3.png",
+      "/assets/projects-screenshots/shoe_ai/4.png",
+      "/assets/projects-screenshots/shoe_ai/5.png",
     ],
-  },
-  {
-    id: 3,
-    name: "Coupon Luxury",
-    description: `Welcome to CouponLuxury, your destination for exclusive discounts and savings. Explore the platform to find the
-best deals on luxury brands and products. Join our savvy community of shoppers and unlock access to premium coupons.`,
-    link: "https://www.couponluxury.com/",
-    images: [
-      "/assets/projects-screenshots/couponluxury/1.png",
-      "/assets/projects-screenshots/couponluxury/2.png",
-      "/assets/projects-screenshots/couponluxury/3.png",
-      "/assets/projects-screenshots/couponluxury/4.png",
-      "/assets/projects-screenshots/couponluxury/5.png",
-    ],
-  },
-  {
-    id: 4,
-    name: "JNTUA Results Analyser",
-    description: `the go-to app for JNTUA students, empowering them to analyze, compare, and view classwise results effortlessly.
-     Dive into your academic journey with ease, track your progress, and gain valuable insights.`,
-    link: "/projects/4",
-    images: ["/assets/projects-screenshots/jra/1.png"],
   },
 ];
 function Page() {

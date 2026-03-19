@@ -299,6 +299,7 @@ const projects: Project[] = [
     get content() {
       return (
         <div className="flex flex-col gap-6 mt-8">
+          <ProjectsLinks live={this.live} repo={this.github} />
           <SlideShow images={this.screenshots} />
           <div className="space-y-4 px-4">
             <TypographyP className="italic text-zinc-400 text-lg leading-relaxed">
@@ -315,7 +316,6 @@ const projects: Project[] = [
               It&apos;s not just data; it&apos;s the digital pulse of the internet, analyzed in real-time.
             </TypographyP>
           </div>
-          <ProjectsLinks live={this.live} repo={this.github} />
         </div>
       );
     },
@@ -341,6 +341,7 @@ const projects: Project[] = [
     get content() {
       return (
         <div className="flex flex-col gap-6 mt-8">
+          <ProjectsLinks live={this.live} repo={this.github} />
           <SlideShow images={this.screenshots} />
           <div className="space-y-4 px-4">
             <TypographyP className="italic text-zinc-400 text-lg leading-relaxed">
@@ -357,7 +358,6 @@ const projects: Project[] = [
               in a fully interactive environment. It&apos;s where professional design meets the speed of generative AI.
             </TypographyP>
           </div>
-          <ProjectsLinks live={this.live} repo={this.github} />
         </div>
       );
     },

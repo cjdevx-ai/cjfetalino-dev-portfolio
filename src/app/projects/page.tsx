@@ -13,7 +13,7 @@ const PROJECTS = [
     id: 1,
     name: "Reddit Sentiment Analysis",
     description: `Deciphering the digital pulse of Reddit. By leveraging the DistilBERT model and a high-performance FastAPI backend, this system transforms thousands of comments into a visual map of collective emotion. It's not just data; it's a peek behind the curtain of online discourse.`,
-    link: "https://github.com/cjdevx-ai/Reddit-Sentiment-Analysis",
+    link: "https://reddit-sentiment-analysis-683774943632.europe-west1.run.app",
     images: [
       "/assets/projects-screenshots/sentiment_ai/1.png",
       "/assets/projects-screenshots/sentiment_ai/2.png",
@@ -23,7 +23,7 @@ const PROJECTS = [
     id: 2,
     name: "ShoeAI: Prompt to 3D",
     description: `Where imagination meets materialization. ShoeAI merges Stability AI with specialized 3D generative pipelines to turn text prompts into high-fidelity footwear models in under 60 seconds. A professional design suite powered by the cutting edge of generative AI.`,
-    link: "https://github.com/cjdevx-ai/Promt-to-3D-Shoe-AI",
+    link: "https://prompt-to-3d-12190233308.europe-west1.run.app",
     images: [
       "/assets/projects-screenshots/shoe_ai/1.png",
       "/assets/projects-screenshots/shoe_ai/2.png",

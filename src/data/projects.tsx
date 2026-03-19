@@ -294,7 +294,7 @@ const projects: Project[] = [
       frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.vite, PROJECT_SKILLS.docker],
       backend: [PROJECT_SKILLS.fastapi, PROJECT_SKILLS.python, PROJECT_SKILLS.huggingface],
     },
-    live: "#",
+    live: "https://reddit-sentiment-analysis-683774943632.europe-west1.run.app",
     github: "https://github.com/cjdevx-ai/Reddit-Sentiment-Analysis",
     get content() {
       return (
@@ -336,7 +336,7 @@ const projects: Project[] = [
       frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.ts, PROJECT_SKILLS.threejs, PROJECT_SKILLS.vite],
       backend: [PROJECT_SKILLS.fastapi, PROJECT_SKILLS.stabilityai, PROJECT_SKILLS.pollinations, PROJECT_SKILLS.googlecloud],
     },
-    live: "#",
+    live: "https://prompt-to-3d-12190233308.europe-west1.run.app",
     github: "https://github.com/cjdevx-ai/Promt-to-3D-Shoe-AI",
     get content() {
       return (

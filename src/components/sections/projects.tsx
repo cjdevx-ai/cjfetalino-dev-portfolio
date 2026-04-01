@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   ModalBody,
@@ -13,19 +13,64 @@ import { FloatingDock } from "../ui/floating-dock";
 import Link from "next/link";
 
 import SmoothScroll from "../smooth-scroll";
-import projects, { Project } from "@/data/projects";
+import initialProjects, { Project } from "@/data/projects";
 import { cn } from "@/lib/utils";
 import { SectionHeader } from "./section-header";
 
 import SectionWrapper from "../ui/section-wrapper";
 
 const ProjectsSection = () => {
+  const [projects, setProjects] = useState<Project[]>(initialProjects);
+
+  useEffect(() => {
+    const fetchLinks = async () => {
+      try {
+        const response = await fetch("/assets/projects-screenshots/links.csv");
+        const csvText = await response.text();
+        const lines = csvText.split("\n").filter((line) => line.trim() !== "");
+        if (lines.length < 2) return;
+        
+        const headers = lines[0].split(",");
+
+        const linksMap = new Map();
+        for (let i = 1; i < lines.length; i++) {
+          const values = lines[i].split(",");
+          const entry: any = {};
+          headers.forEach((header, index) => {
+            entry[header.trim()] = values[index]?.trim();
+          });
+          if (entry.id) {
+            linksMap.set(entry.id, entry);
+          }
+        }
+
+        const updatedProjects = initialProjects.map((p) => {
+          const links = linksMap.get(p.id);
+          if (links) {
+            return {
+              ...p,
+              live: links.live || p.live,
+              github: links.repo || p.github,
+            };
+          }
+          return p;
+        });
+
+        setProjects(updatedProjects);
+      } catch (error) {
+        console.error("Error loading project links:", error);
+      }
+    };
+
+    fetchLinks();
+  }, []);
+
   return (
     <SectionWrapper id="projects" className="max-w-7xl mx-auto md:h-[130vh]">
-      <SectionHeader id='projects' title="Projects" />
-      <div className="grid grid-cols-1 md:grid-cols-3">
+      <SectionHeader id="projects" title="Projects" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-y-10">
         {projects.map((project, index) => (
-          <Modall key={project.src} project={project} />
+          <Modall key={project.id} project={project} />
         ))}
       </div>
     </SectionWrapper>
@@ -89,7 +134,6 @@ const Modall = ({ project }: { project: Project }) => {
     </div>
   );
 };
-export default ProjectsSection;
 
 const ProjectContents = ({ project }: { project: Project }) => {
   return (
@@ -115,36 +159,9 @@ const ProjectContents = ({ project }: { project: Project }) => {
           </div>
         )}
       </div>
-      {/* <div className="flex justify-center items-center">
-        {project.screenshots.map((image, idx) => (
-          <motion.div
-            key={"images" + idx}
-            style={{
-              rotate: Math.random() * 20 - 10,
-            }}
-            whileHover={{
-              scale: 1.1,
-              rotate: 0,
-              zIndex: 100,
-            }}
-            whileTap={{
-              scale: 1.1,
-              rotate: 0,
-              zIndex: 100,
-            }}
-            className="rounded-xl -mr-4 mt-4 p-1 bg-white dark:bg-neutral-800 dark:border-neutral-700 border border-neutral-100 flex-shrink-0 overflow-hidden"
-          >
-            <Image
-              src={`${project.src.split("1.png")[0]}${image}`}
-              alt="screenshots"
-              width="500"
-              height="500"
-              className="rounded-lg h-20 w-20 md:h-40 md:w-40 object-cover flex-shrink-0"
-            />
-          </motion.div>
-        ))}
-      </div> */}
       {project.content}
     </>
   );
 };
+
+export default ProjectsSection;
